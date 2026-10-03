@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bluefin Swim Academy | About Us</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌊</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0B0E11',
+                        primary: '#22bbee',
+                        primaryHover: '#3ce1ff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-dark text-white font-sans selection:bg-primary selection:text-dark">
+    <!-- Navbar Component -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10 transition-all duration-300 py-4">
+        <div class="max-w-7xl mx-auto px-5 sm:px-10 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3 text-2xl font-bold tracking-wider text-primary">
+                BLUEFIN<span class="text-white">SWIM</span>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="text-sm font-semibold text-white/90 hover:text-primary transition-colors">Home</a>
+                <a href="about.html" class="text-sm font-semibold text-primary transition-colors">About</a>
+                <a href="contact.html" class="text-sm font-semibold text-white/90 hover:text-primary transition-colors">Contact</a>
+            </div>
+            <div class="hidden md:flex items-center gap-4">
+                <a href="signin.html" class="text-sm font-semibold text-white/90 hover:text-primary transition-colors">Sign In</a>
+                <a href="signup.html" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary hover:bg-primaryHover text-dark font-bold text-sm tracking-wide transition-all shadow-[0_4px_14px_rgba(34,187,238,0.39)]">Sign Up</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-btn" class="text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full glass border-b border-white/10 py-4 flex flex-col items-center gap-4">
+            <a href="index.html" class="text-sm font-semibold text-white/90 hover:text-primary">Home</a>
+            <a href="about.html" class="text-sm font-semibold text-primary">About</a>
+            <a href="contact.html" class="text-sm font-semibold text-white/90 hover:text-primary">Contact</a>
+            <a href="signin.html" class="text-sm font-semibold text-white/90 hover:text-primary">Sign In</a>
+            <a href="signup.html" class="text-sm font-semibold text-white/90 hover:text-primary">Sign Up</a>
+        </div>
+    </nav>
+    <script>
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+    </script>
+
+    <!-- Page Header Component -->
+    <section class="pt-32 pb-16 bg-gradient-to-b from-[#0F1419] to-dark text-center border-b border-white/5">
+        <div class="max-w-4xl mx-auto px-5">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">About <span class="text-primary">Us</span></h1>
+            <p class="text-gray-400 text-lg">We are passionate about bringing the joy and safety of swimming to our community.</p>
+        </div>
+    </section>
+
+    <!-- Our Mission Component -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-5 sm:px-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="glass p-8 rounded-2xl relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/20 blur-3xl rounded-full"></div>
+                <h3 class="text-2xl font-bold mb-4 text-primary">Our Mission</h3>
+                <p class="text-gray-300 leading-relaxed">
+                    At Bluefin Swim Academy, our mission is to empower individuals through aquatic education. We strive to provide a safe, nurturing, and professional environment where swimmers can overcome their fears, master proper techniques, and achieve their personal best.
+                </p>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="glass p-6 rounded-xl text-center">
+                    <div class="text-3xl font-bold text-primary mb-1">10+</div>
+                    <div class="text-xs text-gray-400 uppercase">Years Experience</div>
+                </div>
+                <div class="glass p-6 rounded-xl text-center">
+                    <div class="text-3xl font-bold text-primary mb-1">50+</div>
+                    <div class="text-xs text-gray-400 uppercase">Awards Won</div>
+                </div>
+                <div class="glass p-6 rounded-xl text-center col-span-2">
+                    <div class="text-xl font-bold text-white mb-2">Certified Coaches</div>
+                    <div class="text-sm text-gray-400">All our instructors are fully certified and background checked.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Component -->
+    <section class="py-20 bg-[#080a0d]">
+        <div class="max-w-7xl mx-auto px-5 sm:px-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">Meet Our <span class="text-primary">Coaches</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Learn from the best. Our team of Olympic-level instructors brings decades of experience.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Coach 1 -->
+                <div class="glass p-6 rounded-2xl text-center group">
+                    <div class="w-32 h-32 mx-auto bg-gradient-to-tr from-primary to-blue-600 rounded-full mb-6 p-1">
+                        <div class="w-full h-full bg-dark rounded-full flex items-center justify-center text-4xl">👱‍♂️</div>
+                    </div>
+                    <h3 class="text-xl font-bold group-hover:text-primary transition-colors">Michael Phelps</h3>
+                    <p class="text-sm text-primary mb-4">Head Coach</p>
+                    <p class="text-sm text-gray-400">Specializes in competitive training and advanced stroke mechanics.</p>
+                </div>
+                <!-- Coach 2 -->
+                <div class="glass p-6 rounded-2xl text-center group">
+                    <div class="w-32 h-32 mx-auto bg-gradient-to-tr from-primary to-blue-600 rounded-full mb-6 p-1">
+                        <div class="w-full h-full bg-dark rounded-full flex items-center justify-center text-4xl">👩‍🦰</div>
+                    </div>
+                    <h3 class="text-xl font-bold group-hover:text-primary transition-colors">Katie Ledecky</h3>
+                    <p class="text-sm text-primary mb-4">Endurance Coach</p>
+                    <p class="text-sm text-gray-400">Expert in long-distance swimming and stamina building techniques.</p>
+                </div>
+                <!-- Coach 3 -->
+                <div class="glass p-6 rounded-2xl text-center group">
+                    <div class="w-32 h-32 mx-auto bg-gradient-to-tr from-primary to-blue-600 rounded-full mb-6 p-1">
+                        <div class="w-full h-full bg-dark rounded-full flex items-center justify-center text-4xl">👨‍🦱</div>
+                    </div>
+                    <h3 class="text-xl font-bold group-hover:text-primary transition-colors">Adam Peaty</h3>
+                    <p class="text-sm text-primary mb-4">Youth Instructor</p>
+                    <p class="text-sm text-gray-400">Passionate about teaching water safety and foundational skills to kids.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Component -->
+    <footer class="bg-[#050709] border-t border-white/10 py-12 mt-10">
+        <div class="max-w-7xl mx-auto px-5 sm:px-10 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="col-span-1 md:col-span-2">
+                <a href="index.html" class="flex items-center gap-3 text-2xl font-bold tracking-wider text-primary mb-4">
+                    BLUEFIN<span class="text-white">SWIM</span>
+                </a>
+                <p class="text-gray-400 text-sm max-w-sm">Empowering swimmers of all levels to reach their full potential. Join the Bluefin family and dive into excellence.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="index.html" class="hover:text-primary transition-colors">Home</a></li>
+                    <li><a href="about.html" class="hover:text-primary transition-colors">About Us</a></li>
+                    <li><a href="contact.html" class="hover:text-primary transition-colors">Contact</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Legal</h4>
+                <ul class="space-y-2 text-sm text-gray-400">
+                    <li><a href="#" class="hover:text-primary transition-colors">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-primary transition-colors">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-5 sm:px-10 mt-12 pt-8 border-t border-white/10 text-center text-sm text-gray-500">
+            &copy; 2026 Bluefin Swim Academy. All rights reserved.
+        </div>
+    </footer>
+</body>
+</html>
