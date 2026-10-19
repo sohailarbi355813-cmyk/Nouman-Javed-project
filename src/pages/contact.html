@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blue Ocean Swim Academy | Contact Us</title>
     <!-- Favicon link pointing to separate assets/images folder -->
-    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="../../assets/images/favicon.svg">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -24,17 +24,18 @@
         }
     </script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
 </head>
 <body class="bg-dark text-white font-sans selection:bg-primary selection:text-dark">
+    <!-- Header with Primary Navigation -->
     <header class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10 transition-all duration-300 py-4">
         <nav aria-label="Main Navigation" class="max-w-7xl mx-auto px-5 sm:px-10 flex items-center justify-between">
-            <a href="index.html" class="flex items-center gap-3 text-2xl font-bold tracking-wider text-primary">
-                <img src="assets/images/favicon.svg" alt="Blue Ocean Logo" class="w-8 h-8 rounded-lg shadow-sm">
+            <a href="../../index.html" class="flex items-center gap-3 text-2xl font-bold tracking-wider text-primary">
+                <img src="../../assets/images/favicon.svg" alt="Blue Ocean Logo" class="w-8 h-8 rounded-lg shadow-sm">
                 <span>BLUE<span class="text-white">OCEAN</span></span>
             </a>
             <div class="hidden md:flex items-center gap-8">
-                <a href="index.html" class="text-sm font-semibold text-white/90 hover:text-primary transition-colors">Home</a>
+                <a href="../../index.html" class="text-sm font-semibold text-white/90 hover:text-primary transition-colors">Home</a>
                 <a href="about.html" class="text-sm font-semibold text-white/90 hover:text-primary transition-colors">About</a>
                 <a href="contact.html" class="text-sm font-semibold text-primary transition-colors" aria-current="page">Contact</a>
             </div>
@@ -48,8 +49,9 @@
                 </button>
             </div>
         </nav>
+        <!-- Mobile Navigation Menu -->
         <nav id="mobile-menu" aria-label="Mobile Navigation" class="hidden md:hidden absolute top-full left-0 w-full glass border-b border-white/10 py-4 flex flex-col items-center gap-4">
-            <a href="index.html" class="text-sm font-semibold text-white/90 hover:text-primary">Home</a>
+            <a href="../../index.html" class="text-sm font-semibold text-white/90 hover:text-primary">Home</a>
             <a href="about.html" class="text-sm font-semibold text-white/90 hover:text-primary">About</a>
             <a href="contact.html" class="text-sm font-semibold text-primary" aria-current="page">Contact</a>
             <a href="signin.html" class="text-sm font-semibold text-white/90 hover:text-primary">Sign In</a>
@@ -65,7 +67,9 @@
         });
     </script>
 
+    <!-- Main Content -->
     <main id="main-content">
+        <!-- Page Header Component -->
         <section aria-labelledby="contact-page-title" class="pt-32 pb-16 bg-gradient-to-b from-[#0F1419] to-dark text-center border-b border-white/5">
             <div class="max-w-4xl mx-auto px-5">
                 <h1 id="contact-page-title" class="text-4xl md:text-6xl font-bold mb-4">Get in <span class="text-primary">Touch</span></h1>
@@ -73,9 +77,11 @@
             </div>
         </section>
 
+        <!-- Contact Form & Info Component -->
         <section aria-label="Contact Blue Ocean Academy" class="py-20">
             <div class="max-w-7xl mx-auto px-5 sm:px-10 grid grid-cols-1 lg:grid-cols-2 gap-12">
                 
+                <!-- Contact Info Aside -->
                 <aside aria-labelledby="contact-info-title" class="flex flex-col gap-8">
                     <div class="glass p-8 rounded-2xl">
                         <h2 id="contact-info-title" class="text-xl font-bold mb-6 text-white border-b border-white/10 pb-4">Contact Information</h2>
@@ -119,6 +125,7 @@
                     </div>
                 </aside>
 
+                <!-- Contact Form Article -->
                 <article aria-labelledby="form-title" class="glass p-8 rounded-2xl">
                     <h2 id="form-title" class="text-2xl font-bold mb-6 text-white">Send a Message</h2>
                     <!-- FormSubmit integration directing messages to malikmani00068@gmail.com -->
@@ -158,11 +165,12 @@
         </section>
     </main>
 
+    <!-- Footer Component -->
     <footer class="bg-[#050709] border-t border-white/10 py-12 mt-10">
         <div class="max-w-7xl mx-auto px-5 sm:px-10 grid grid-cols-1 md:grid-cols-4 gap-8">
             <div class="col-span-1 md:col-span-2">
-                <a href="index.html" class="flex items-center gap-3 text-2xl font-bold tracking-wider text-primary mb-4">
-                    <img src="assets/images/favicon.svg" alt="Blue Ocean Logo" class="w-7 h-7 rounded-lg">
+                <a href="../../index.html" class="flex items-center gap-3 text-2xl font-bold tracking-wider text-primary mb-4">
+                    <img src="../../assets/images/favicon.svg" alt="Blue Ocean Logo" class="w-7 h-7 rounded-lg">
                     <span>BLUE<span class="text-white">OCEAN</span></span>
                 </a>
                 <p class="text-gray-400 text-sm max-w-sm">Empowering swimmers of all levels to reach their full potential. Join the Blue Ocean family and dive into excellence.</p>
@@ -171,7 +179,7 @@
                 <h4 class="text-white font-semibold mb-4">Quick Links</h4>
                 <nav aria-label="Footer Quick Links">
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li><a href="index.html" class="hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="../../index.html" class="hover:text-primary transition-colors">Home</a></li>
                         <li><a href="about.html" class="hover:text-primary transition-colors">About Us</a></li>
                         <li><a href="contact.html" class="hover:text-primary transition-colors">Contact</a></li>
                     </ul>
