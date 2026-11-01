@@ -599,3 +599,4 @@ if (document.readyState === 'loading') {
 } else {
     initCRUD();
 }
+
