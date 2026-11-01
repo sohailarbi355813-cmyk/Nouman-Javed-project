@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Ocean Swim Academy | Training Portal & Live API</title>
+    <!-- Favicon link pointing to assets/images folder -->
+    <link rel="icon" type="image/svg+xml" href="../../assets/images/favicon.svg">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0B0E11',
+                        primary: '#22bbee',
+                        primaryHover: '#3ce1ff',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <!-- Axios CDN Link for API Integration (Assignment Task 2 Requirement) -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body class="bg-dark text-white font-sans selection:bg-primary selection:text-dark min-h-screen flex flex-col">
+
+    <!-- Header with Primary Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass border-b border-white/10 transition-all duration-300 py-4">
+        <nav aria-label="Main Navigation" class="max-w-7xl mx-auto px-5 sm:px-10 flex items-center justify-between">
+            <a href="../../index.html" class="flex items-center gap-3 text-2xl font-bold tracking-wider text-primary">
+                <img src="../../assets/images/favicon.svg" alt="Blue Ocean Logo" class="w-8 h-8 rounded-lg shadow-sm">
+                <span>BLUE<span class="text-white">OCEAN</span></span>
+            </a>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="../../index.html" class="text-sm font-semibold text-white/90 hover:text-primary transition-colors">Home</a>
+                <a href="about.html" class="text-sm font-semibold text-white/90 hover:text-primary transition-colors">About</a>
+                <a href="contact.html" class="text-sm font-semibold text-white/90 hover:text-primary transition-colors">Contact</a>
+                <a href="portal.html" class="text-sm font-semibold text-primary transition-colors flex items-center gap-1.5" aria-current="page">
+                    Training Portal
+                    <span class="px-2 py-0.5 text-[10px] font-bold bg-primary text-dark rounded-full uppercase tracking-wider">Live</span>
+                </a>
+            </div>
+            <div class="hidden md:flex items-center gap-4">
+                <a href="signin.html" class="text-sm font-semibold text-white/90 hover:text-primary transition-colors">Sign In</a>
+                <a href="signup.html" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary hover:bg-primaryHover text-dark font-bold text-sm tracking-wide transition-all shadow-[0_4px_14px_rgba(34,187,238,0.39)]">Sign Up</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-btn" aria-label="Toggle mobile menu" aria-expanded="false" class="text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <!-- Mobile Navigation Menu -->
+        <nav id="mobile-menu" aria-label="Mobile Navigation" class="hidden md:hidden absolute top-full left-0 w-full glass border-b border-white/10 py-4 flex flex-col items-center gap-4">
+            <a href="../../index.html" class="text-sm font-semibold text-white/90 hover:text-primary">Home</a>
+            <a href="about.html" class="text-sm font-semibold text-white/90 hover:text-primary">About</a>
+            <a href="contact.html" class="text-sm font-semibold text-white/90 hover:text-primary">Contact</a>
+            <a href="portal.html" class="text-sm font-semibold text-primary" aria-current="page">Training Portal (Live CRUD & API)</a>
+            <a href="signin.html" class="text-sm font-semibold text-white/90 hover:text-primary">Sign In</a>
+            <a href="signup.html" class="text-sm font-semibold text-white/90 hover:text-primary">Sign Up</a>
+        </nav>
+    </header>
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            const isHidden = mobileMenu.classList.toggle('hidden');
+            menuBtn.setAttribute('aria-expanded', !isHidden);
+        });
+    </script>
+
+    <!-- Main Content Area -->
+    <main id="main-content" class="flex-grow pt-28 pb-16">
+
+        <!-- Page Header Component -->
+        <section aria-labelledby="portal-hero-title" class="pb-10 pt-4 bg-gradient-to-b from-[#0F1419] to-dark border-b border-white/5">
+            <div class="max-w-7xl mx-auto px-5 sm:px-10">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-semibold mb-3">
+                            <span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+                            Assignment 03: JavaScript CRUD, LocalStorage & Axios API
+                        </div>
+                        <h1 id="portal-hero-title" class="text-3xl md:text-5xl font-bold">
+                            Academy <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-400">Portal</span>
+                        </h1>
+                        <p class="text-gray-400 text-sm md:text-base mt-2 max-w-2xl">
+                            Manage training session enrollments in real-time with full local persistence, search, filtering, and live public API integration.
+                        </p>
+                    </div>
+
+                    <!-- Statistics Summary Badges (Populated via Array map & filter) -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        <div class="glass px-4 py-3 rounded-xl border border-white/10 text-center">
+                            <span class="text-xs text-gray-400 uppercase tracking-wider block">Total</span>
+                            <span id="total-records-count" class="text-2xl font-bold text-primary">0</span>
+                        </div>
+                        <div class="glass px-4 py-3 rounded-xl border border-white/10 text-center">
+                            <span class="text-xs text-gray-400 uppercase tracking-wider block">Active</span>
+                            <span id="active-count" class="text-2xl font-bold text-emerald-400">0</span>
+                        </div>
+                        <div class="glass px-4 py-3 rounded-xl border border-white/10 text-center">
+                            <span class="text-xs text-gray-400 uppercase tracking-wider block">Pending</span>
+                            <span id="pending-count" class="text-2xl font-bold text-yellow-400">0</span>
+                        </div>
+                        <div class="glass px-4 py-3 rounded-xl border border-white/10 text-center">
+                            <span class="text-xs text-gray-400 uppercase tracking-wider block">Completed</span>
+                            <span id="completed-count" class="text-2xl font-bold text-blue-400">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: Task 2 - Free Public API Integration with Axios GET -->
+        <section aria-labelledby="live-apis-heading" class="py-12 border-b border-white/10 bg-[#07090c]">
+            <div class="max-w-7xl mx-auto px-5 sm:px-10">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 text-xs font-bold rounded-md bg-primary text-dark uppercase tracking-wider">Task 2</span>
+                            <h2 id="live-apis-heading" class="text-2xl md:text-3xl font-bold text-white">Live Public API Integration</h2>
+                        </div>
+                        <p class="text-gray-400 text-sm mt-1">Fetched dynamically using <code class="text-primary font-mono text-xs px-1.5 py-0.5 rounded bg-white/5">axios.get()</code> with full loading and error states.</p>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <button id="refresh-weather-btn" title="Refresh Live Weather" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl glass border border-white/10 text-xs font-semibold text-gray-300 hover:text-primary hover:border-primary/40 transition-all">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                            Refresh Weather
+                        </button>
+                        <button id="refresh-community-btn" title="Refresh Community Feed" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl glass border border-white/10 text-xs font-semibold text-gray-300 hover:text-primary hover:border-primary/40 transition-all">
+                            <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                            Refresh Feed
+                        </button>
+                    </div>
+                </div>
+
+                <!-- API 1: Live Pool & Weather Conditions (Open-Meteo API) -->
+                <article aria-labelledby="weather-card-title" id="weather-api-container" class="glass rounded-2xl p-6 sm:p-8 border border-white/10 mb-8 relative overflow-hidden">
+                    <div class="absolute -top-24 -right-24 w-60 h-60 bg-primary/10 blur-3xl rounded-full"></div>
+
+                    <!-- Header -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10 relative z-10">
+                        <div>
+                            <span class="text-xs uppercase font-bold text-primary tracking-wider">Endpoint 1 • Open-Meteo Weather API</span>
+                            <h3 id="weather-card-title" class="text-xl font-bold text-white mt-1">Lahore Olympic Training Pool • Live Conditions</h3>
+                            <span id="weather-updated-time" class="text-xs text-gray-500">Checking conditions...</span>
+                        </div>
+                        <div>
+                            <span id="weather-safety-badge" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                                Checking pool conditions...
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Weather Loading State -->
+                    <div id="weather-loading" class="py-12 flex flex-col items-center justify-center gap-3">
+                        <div class="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+                        <p class="text-sm text-gray-400">Fetching live telemetry via Axios GET...</p>
+                    </div>
+
+                    <!-- Weather Error State -->
+                    <div id="weather-error" class="hidden py-8 text-center">
+                        <div class="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 max-w-md mx-auto">
+                            <p class="font-bold text-sm">Failed to load weather data</p>
+                            <p id="weather-error-msg" class="text-xs mt-1 text-gray-400">Check internet connection or try again.</p>
+                            <button id="retry-weather-btn" class="mt-3 px-4 py-1.5 rounded-lg bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold transition-colors">
+                                Retry Request
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Weather Content Display -->
+                    <div id="weather-content" class="hidden pt-6 relative z-10">
+                        <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                            <div class="glass p-4 rounded-xl border border-white/5">
+                                <span class="text-xs text-gray-400 block mb-1">Temperature</span>
+                                <div id="weather-temp" class="text-3xl font-bold text-white">--°C</div>
+                            </div>
+                            <div class="glass p-4 rounded-xl border border-white/5">
+                                <span class="text-xs text-gray-400 block mb-1">Feels Like</span>
+                                <div id="weather-feels-like" class="text-2xl font-bold text-gray-200">--°C</div>
+                            </div>
+                            <div class="glass p-4 rounded-xl border border-white/5">
+                                <span class="text-xs text-gray-400 block mb-1">Condition</span>
+                                <div id="weather-condition" class="text-lg font-bold text-gray-200 truncate">Loading...</div>
+                            </div>
+                            <div class="glass p-4 rounded-xl border border-white/5">
+                                <span class="text-xs text-gray-400 block mb-1">Humidity</span>
+                                <div id="weather-humidity" class="text-2xl font-bold text-gray-200">--%</div>
+                            </div>
+                            <div class="glass p-4 rounded-xl border border-white/5">
+                                <span class="text-xs text-gray-400 block mb-1">Wind Speed</span>
+                                <div id="weather-wind" class="text-2xl font-bold text-gray-200">-- km/h</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- API 2: Live Community Insights & Advice Feed (JSONPlaceholder via Axios) -->
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div>
+                            <span class="text-xs uppercase font-bold text-primary tracking-wider">Endpoint 2 • JSONPlaceholder REST API</span>
+                            <h3 class="text-xl font-bold text-white mt-1">Aquatic Community Insights & Training Posts</h3>
+                        </div>
+                    </div>
+
+                    <!-- Community Loading State -->
+                    <div id="community-loading" class="py-12 flex flex-col items-center justify-center gap-3">
+                        <div class="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+                        <p class="text-sm text-gray-400">Loading community discussions from REST API...</p>
+                    </div>
+
+                    <!-- Community Error State -->
+                    <div id="community-error" class="hidden py-8 text-center">
+                        <div class="p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 max-w-md mx-auto">
+                            <p class="font-bold text-sm">Failed to retrieve community feed</p>
+                            <p id="community-error-msg" class="text-xs mt-1 text-gray-400">Axios GET request encountered an issue.</p>
+                            <button id="retry-community-btn" class="mt-3 px-4 py-1.5 rounded-lg bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold transition-colors">
+                                Retry Feed
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Community Dynamic Cards Grid -->
+                    <div id="community-posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION: Task 1 - Swimmer Enrollment & Training Session CRUD Application -->
+        <section aria-labelledby="crud-heading" class="py-12">
+            <div class="max-w-7xl mx-auto px-5 sm:px-10">
+                
+                <!-- Section Header -->
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 text-xs font-bold rounded-md bg-emerald-500 text-dark uppercase tracking-wider">Task 1</span>
+                            <h2 id="crud-heading" class="text-2xl md:text-3xl font-bold text-white">Swimmer Enrollment Management</h2>
+                        </div>
+                        <p class="text-gray-400 text-sm mt-1">
+                            Create, Read, Update, and Delete enrollments with persistent browser storage (<code class="text-primary font-mono text-xs">localStorage</code>).
+                        </p>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-3">
+                        <button id="reset-data-btn" title="Clear and Reset Local Storage" class="px-4 py-2.5 rounded-xl border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500 hover:text-white text-rose-300 text-xs font-semibold transition-all flex items-center gap-1.5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                            Reset Data (<span class="font-mono text-[11px]">removeItem</span>)
+                        </button>
+                        
+                        <button id="open-create-modal" class="px-6 py-2.5 rounded-xl bg-primary hover:bg-primaryHover text-dark font-bold text-sm tracking-wide transition-all shadow-[0_4px_14px_rgba(34,187,238,0.39)] flex items-center gap-2">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+                            Add New Enrollment
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Search, Filter & Sort Controls (Demonstrating Array filter() and DOM Updates) -->
+                <div class="glass p-5 rounded-2xl border border-white/10 mb-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        
+                        <!-- Search Input -->
+                        <div class="relative">
+                            <svg class="w-4 h-4 text-gray-400 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <input id="search-input" type="text" placeholder="Search swimmer, coach, lane..." class="w-full bg-[#13181f] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+                        </div>
+
+                        <!-- Category Filter -->
+                        <div>
+                            <select id="category-filter" class="w-full bg-[#13181f] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-primary transition-all">
+                                <option value="all">All Categories / Levels</option>
+                                <option value="Water Babies">Water Babies</option>
+                                <option value="Beginner">Beginner</option>
+                                <option value="Intermediate">Intermediate</option>
+                                <option value="Advanced">Advanced</option>
+                                <option value="Competitive Squad">Competitive Squad</option>
+                            </select>
+                        </div>
+
+                        <!-- Status Filter -->
+                        <div>
+                            <select id="status-filter" class="w-full bg-[#13181f] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-primary transition-all">
+                                <option value="all">All Statuses</option>
+                                <option value="Active">Active</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Completed">Completed</option>
+                            </select>
+                        </div>
+
+                        <!-- Sort Order -->
+                        <div>
+                            <select id="sort-select" class="w-full bg-[#13181f] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-primary transition-all">
+                                <option value="newest">Sort: Newest First</option>
+                                <option value="oldest">Sort: Oldest First</option>
+                                <option value="name-asc">Sort: Name (A-Z)</option>
+                                <option value="name-desc">Sort: Name (Z-A)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-xs text-gray-400">
+                        <span id="showing-count">Loading records...</span>
+                        <span>Filtering with <code class="text-primary font-mono text-[11px]">Array.filter()</code></span>
+                    </div>
+                </div>
+
+                <!-- Desktop Table View (Read Records) -->
+                <div class="hidden md:block glass rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-[#121720] border-b border-white/10 text-xs uppercase tracking-wider text-gray-400">
+                                <tr>
+                                    <th class="py-4 px-4 font-semibold">Swimmer Name</th>
+                                    <th class="py-4 px-4 font-semibold">Program / Level</th>
+                                    <th class="py-4 px-4 font-semibold">Coach</th>
+                                    <th class="py-4 px-4 font-semibold">Schedule</th>
+                                    <th class="py-4 px-4 font-semibold">Pool Lane</th>
+                                    <th class="py-4 px-4 font-semibold">Status</th>
+                                    <th class="py-4 px-4 font-semibold text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="records-table-body" class="divide-y divide-white/5">
+                                <!-- Populated dynamically by assets/js/crud.js using Array.map() -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Mobile Card Grid View -->
+                <div id="records-card-grid" class="md:hidden space-y-4">
+                    <!-- Populated dynamically by assets/js/crud.js -->
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- CREATE & UPDATE MODAL COMPONENT -->
+    <div id="record-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="glass w-full max-w-lg rounded-3xl border border-white/10 p-6 sm:p-8 relative overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+            <div class="absolute -top-16 -right-16 w-36 h-36 bg-primary/20 blur-3xl rounded-full"></div>
+
+            <div class="flex items-center justify-between pb-4 border-b border-white/10 mb-6 relative z-10">
+                <h3 id="modal-title" class="text-xl font-bold text-white">Add New Swimmer Enrollment</h3>
+                <button id="close-modal-btn" class="p-1 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <form id="record-form" class="space-y-4 relative z-10">
+                <input type="hidden" id="record-id">
+
+                <!-- Swimmer Name -->
+                <div>
+                    <label for="swimmer-name" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1">Swimmer Name *</label>
+                    <input id="swimmer-name" type="text" required placeholder="e.g. Ayan Qureshi" class="w-full bg-[#13181f] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+                </div>
+
+                <!-- Category & Coach -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="category-select" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1">Category / Level *</label>
+                        <select id="category-select" required class="w-full bg-[#13181f] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-primary transition-all">
+                            <option value="Beginner">Beginner</option>
+                            <option value="Water Babies">Water Babies</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                            <option value="Competitive Squad">Competitive Squad</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="coach-select" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1">Assigned Coach *</label>
+                        <select id="coach-select" required class="w-full bg-[#13181f] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-primary transition-all">
+                            <option value="Azzi">Azzi (Head Coach)</option>
+                            <option value="Mehak Raheem">Mehak Raheem (Endurance)</option>
+                            <option value="Azmat Abbass">Azmat Abbass (Youth)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Schedule & Pool Lane -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="schedule-input" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1">Schedule / Slot *</label>
+                        <input id="schedule-input" type="text" required placeholder="e.g. Mon / Wed 09:00 AM" class="w-full bg-[#13181f] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all">
+                    </div>
+
+                    <div>
+                        <label for="pool-lane-select" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1">Pool Lane Assignment *</label>
+                        <select id="pool-lane-select" required class="w-full bg-[#13181f] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-primary transition-all">
+                            <option value="Lane 1 (Heated)">Lane 1 (Heated)</option>
+                            <option value="Lane 2 (Olympic)">Lane 2 (Olympic)</option>
+                            <option value="Lane 3 (Deep End)">Lane 3 (Deep End)</option>
+                            <option value="Lane 4 (Fast Track)">Lane 4 (Fast Track)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Status -->
+                <div>
+                    <label for="status-select" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1">Enrollment Status *</label>
+                    <select id="status-select" required class="w-full bg-[#13181f] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-primary transition-all">
+                        <option value="Active">Active</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+
+                <!-- Training Notes -->
+                <div>
+                    <label for="notes-input" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-1">Training Notes (Optional)</label>
+                    <textarea id="notes-input" rows="2" placeholder="Specific training goals or safety instructions..." class="w-full bg-[#13181f] border border-white/10 rounded-xl px-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all resize-none"></textarea>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
+                    <button type="button" id="cancel-modal-btn" class="px-5 py-2.5 rounded-xl border border-white/10 text-gray-300 hover:bg-white/5 text-sm font-semibold transition-colors">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-6 py-2.5 rounded-xl bg-primary hover:bg-primaryHover text-dark font-bold text-sm tracking-wide transition-all shadow-[0_4px_14px_rgba(34,187,238,0.39)]">
+                        Save Enrollment
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer Component -->
+    <footer class="bg-[#050709] border-t border-white/10 py-12 mt-auto">
+        <div class="max-w-7xl mx-auto px-5 sm:px-10 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="col-span-1 md:col-span-2">
+                <a href="../../index.html" class="flex items-center gap-3 text-2xl font-bold tracking-wider text-primary mb-4">
+                    <img src="../../assets/images/favicon.svg" alt="Blue Ocean Logo" class="w-7 h-7 rounded-lg">
+                    <span>BLUE<span class="text-white">OCEAN</span></span>
+                </a>
+                <p class="text-gray-400 text-sm max-w-sm">Empowering swimmers of all levels to reach their full potential. Join the Blue Ocean family and dive into excellence.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Quick Links</h4>
+                <nav aria-label="Footer Quick Links">
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="../../index.html" class="hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="about.html" class="hover:text-primary transition-colors">About Us</a></li>
+                        <li><a href="contact.html" class="hover:text-primary transition-colors">Contact</a></li>
+                        <li><a href="portal.html" class="text-primary font-semibold">Training Portal</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Legal</h4>
+                <nav aria-label="Footer Legal Links">
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-primary transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Terms of Service</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-5 sm:px-10 mt-12 pt-8 border-t border-white/10 text-center">
+            <small class="text-sm text-gray-500">&copy; 2026 Blue Ocean Swim Academy. All rights reserved.</small>
+        </div>
+    </footer>
+
+    <!-- Scripts for CRUD Operations & Axios API Calls -->
+    <script src="../../assets/js/crud.js"></script>
+    <script src="../../assets/js/api.js"></script>
+</body>
+</html>
